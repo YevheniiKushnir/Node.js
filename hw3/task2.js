@@ -8,11 +8,11 @@ fs.writeFile(FilePath, "Node.js is awesome!", (error) => {
   } else {
     console.log("Successfully wrote to the file");
 
-    fs.readFile(FilePath, (error, data) => {
+    fs.readFile(FilePath, 'utf-8', (error, data) => {
       if (error) {
         console.error("Failed to read the file:", error.message);
       } else {
-        console.log("File read successfully:\n", data.toString());
+        console.log("File read successfully:\n", data);
       }
     });
   }
