@@ -17,14 +17,17 @@ const changeEmailHandler = (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
+  const emailTaken = users.find((u) => u.email === email && u.id !== id);
+  if (emailTaken) {
+    return res.status(400).json({ message: "Email is already in use" });
+  }
+
   try {
     user.email = email;
-    res
-      .status(200)
-      .json({
-        message: "Email successfully changed",
-        user: { id: user.id, role: user.role, username: user.username },
-      });
+    res.status(200).json({
+      message: "Email successfully changed",
+      user: { id: user.id, role: user.role, username: user.username },
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }

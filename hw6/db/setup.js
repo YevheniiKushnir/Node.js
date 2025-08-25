@@ -17,6 +17,9 @@ const createTableProducts = `
 `;
 
 connection.query(createTableProducts, (err) => {
-  if (err) throw new Error();
+  if (err) {
+    console.error("Error creating table:", err.message);
+    return;
+  }
   console.log("Table products has been created");
 });

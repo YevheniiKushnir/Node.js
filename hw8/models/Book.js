@@ -20,9 +20,11 @@ const Book = sequelize.define(
       unique: "unique_title_author",
     },
     year: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {},
+      validate: {
+        isInt: true, 
+      },
     },
   },
   {

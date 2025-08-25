@@ -120,7 +120,7 @@ router.delete("/:id", async (req, res, next) => {
       _id: new ObjectId(id),
     });
 
-    if (!result.deletedCount === 0) {
+    if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Product not found" });
     }
 

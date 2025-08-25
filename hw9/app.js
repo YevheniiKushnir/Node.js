@@ -25,7 +25,11 @@ app.post("/register", checkRequiredFieldsMiddleware, async (req, res) => {
       return res.status(400).json({ message: "This Email already exists" });
     }
 
-    const newUser = await User.create({ email, password, role: role || undefined });
+    const newUser = await User.create({
+      email,
+      password,
+      role: role,
+    });
 
     res.status(201).json({
       message: "User has been successfully created",
@@ -79,12 +83,10 @@ app.post(
 app.post("/change-password", authMiddleware, async (req, res) => {
   try {
     const { password: newPassword } = req.body;
-    const { id } = req.user; 
+    const { id } = req.user;
 
     if (!newPassword) {
-      return res
-        .status(400)
-        .json({ message: "New password is required" });
+      return res.status(400).json({ message: "New password is required" });
     }
 
     const user = await User.findByPk(id);
@@ -104,8 +106,8 @@ app.post("/change-password", authMiddleware, async (req, res) => {
 
 app.post("/change-email", authMiddleware, async (req, res) => {
   try {
-    const { email :newEmail, password } = req.body;
-    const {id} = req.user;
+    const { email: newEmail, password } = req.body;
+    const { id } = req.user;
 
     if (!newEmail || !password) {
       return res
@@ -119,11 +121,16 @@ app.post("/change-email", authMiddleware, async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-     const isValidPassword = await user.checkPassword(password);
+    const isValidPassword = await user.checkPassword(password);
 
     if (!isValidPassword) {
       return res.status(400).json({ message: "Incorrect password" });
-    } 
+    }
+
+    const existingUser = await User.findOne({ where: { email: newEmail } });
+    if (existingUser) {
+      return res.status(400).json({ message: "This email is already taken" });
+    }
 
     user.email = newEmail;
     await user.save();

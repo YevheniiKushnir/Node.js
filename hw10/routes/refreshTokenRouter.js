@@ -16,11 +16,9 @@ router.post("/", (req, res) => {
   const token = authHeader.split(" ")[1];
 
   try {
-    const payload = jwt.decode(token);
-
-    if (!payload) {
-      return res.status(401).json({ message: "Invalid token" });
-    }
+    const payload = jwt.verify(token, process.env.JWT_SECRET, {
+      ignoreExpiration: true,
+    });
 
     const user = users.find((u) => u.id === payload.id);
     if (!user) {
@@ -33,9 +31,12 @@ router.post("/", (req, res) => {
       { expiresIn: "15m" }
     );
 
-    return res.json({ message: "Token refreshed", token: newToken });
+    return res.json({
+      message: "Token refreshed",
+      token: newToken,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    return res.status(401).json({ message: "Invalid token" });
   }
 });
 
