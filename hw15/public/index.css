@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  background-color: darkcyan;
+  font-family: "Courier New", Courier, monospace;
+}
+
+h1 {
+  font-weight: 900;
+  text-shadow: 2px 1px white;
+}
+
+#chat {
+  height: 50vh;
+  width: 20vw;
+  min-width: 400px;
+  min-height: 300px;
+  background-color: white;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  position: relative;
+  box-shadow: 0 0 10px black;
+  overflow: hidden;
+  padding: 10px;
+}
+
+#display {
+  min-height: 80%;
+  height: 100%;
+  background-color: darkcyan;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+
+  p {
+    background-color: white;
+    font-weight: 700;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 5px;
+    gap: 5px;
+
+    span {
+      font-size: 12px;
+      color: darkcyan;
+    }
+  }
+  p.right {
+    align-self: flex-start;
+  }
+  p.left {
+    align-self: flex-end;
+    span {
+      align-self: flex-end;
+    }
+  }
+}
+
+#typing_block {
+  min-width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  gap: 10px;
+
+  input {
+    flex-grow: 1;
+    font-family: inherit;
+    font-weight: 700;
+  }
+
+  button {
+    background-color: darkcyan;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
